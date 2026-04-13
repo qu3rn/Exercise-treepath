@@ -1,3 +1,8 @@
+/**
+ * Formats a file size in bytes to a readable string.
+ * @param size - The size in bytes
+ * @returns The formatted size string (B, KB, or MB)
+ */
 export const formatSize = (size: number): string =>
 {
     if (size < 1024)
