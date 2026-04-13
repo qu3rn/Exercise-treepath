@@ -16,6 +16,9 @@ export const treeReducer = (state: TreeState, action: TreeAction): TreeState =>
             return {
                 ...state,
                 tree: action.payload.tree,
+                expandedPaths: [action.payload.tree.name],
+                searchQuery: '',
+                searchResults: [],
             };
         }
 
