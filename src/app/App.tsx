@@ -17,7 +17,7 @@ export default function App()
         <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/tree" element={<TreePage />} />
-            <Route path="/node/:id" element={<NodeDetailsPage />} />
+            <Route path="/tree/:nodePath" element={<NodeDetailsPage />} />
         </Routes>
     );
 }
