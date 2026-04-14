@@ -1,4 +1,5 @@
 import { Link, Navigate } from 'react-router-dom';
+import EmptyState from '../components/common/EmptyState';
 import { isFileNode, isFolderNode } from '../types/tree';
 import { findNodeByPath } from '../utils/findNodeByPath';
 import { formatSize } from '../utils/formatSize';
@@ -100,9 +101,7 @@ export default function NodeDetails()
                         </h2>
 
                         {node.children.length === 0 ? (
-                            <p className="px-5 py-4 text-[#2D3E5C] text-xs tracking-widest uppercase m-0">
-                                This folder has no children.
-                            </p>
+                            <EmptyState message="This folder has no children." className="px-5 py-4" />
                         ) : (
                             <ul className="m-0 p-0 list-none">
                                 {node.children.map((child) =>
