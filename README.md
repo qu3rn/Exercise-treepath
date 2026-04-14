@@ -1,73 +1,97 @@
-# React + TypeScript + Vite
+# FileTree Explorer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend application for visualizing and navigating a file tree structure provided as JSON.
 
-Currently, two official plugins are available:
+## 🚀 Getting Started
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+🧠 Architecture Decisions
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+1. Data Model
+
+Tree is modeled as a discriminated union:
+
+```typescript
+type FileNode = {
+  name: string;
+  type: 'file';
+  size: number;
+};
+
+type FolderNode = {
+  name: string;
+  type: 'folder';
+  children: TreeNode[];
+};
+
+type TreeNode = FileNode | FolderNode;
 ```
+
+This allows:
+
+- type-safe narrowing
+- clean recursion
+- no unsafe casting
+
+2. Recursive Rendering
+
+Tree is rendered using a recursive component (TreeNode), which handles:
+
+- folder expansion
+- child rendering
+- path propagation
+
+Same recursion pattern is reused for:
+
+search (DFS)
+folder size calculation
+node lookup
+
+3. Node Identification
+
+Each node is identified by its full path, e.g.: root/src/components/Button.tsx
+
+4. Routing Strategy
+
+Routes:
+
+```code
+/ → input
+/tree → tree view
+/tree/* → node details
+```
+
+Splat route is used to support nested paths with /.
+
+6. Search
+
+Search is implemented using DFS traversal.
+
+Characteristics:
+
+case-insensitive
+matches by node name
+returns full path for each result
+
+Search results are derived from tree + query
+
+### Known limitations
+
+- Node path uniqueness depends on unique names within the same folder
+- Very large trees are not optimized (no virtualization)
+- a11y not implemented which could be not optimal 
+  - aria-expanded for folder toggles
+  - semantic buttons and labels
+  - keyboard navigation (not implemented)
+
+### What I Would Improve With More Time
+
+- Add virtualization for large trees (performance)
+- Implemented full a11y
+- Improved UX by more UI functions ( total storage etc. )
