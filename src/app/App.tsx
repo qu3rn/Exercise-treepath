@@ -1,23 +1,16 @@
 import { Route, Routes } from "react-router-dom";
-import HomePage from "../pages/HomePage";
-
-function TreePage()
-{
-    return <div>TreePage</div>;
-}
-
-function NodeDetailsPage()
-{
-    return <div>NodeDetailsPage</div>;
-}
+import Home from "../pages/Home";
+import Tree from "../pages/Tree";
+import NodeDetails from "../pages/NodeDetails";
 
 export default function App()
 {
     return (
         <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/tree" element={<TreePage />} />
-            <Route path="/tree/:nodePath" element={<NodeDetailsPage />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/tree" element={<Tree />} />
+            {/* <Route path="/tree/:nodePath" element={<NodeDetailsPage />} /> */}
+            <Route path="/tree/details" element={<NodeDetails />} />
         </Routes>
     );
 }

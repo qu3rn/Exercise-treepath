@@ -4,7 +4,7 @@ import { useTreeContext } from "../store/TreeContext";
 import { parseTreeData } from "../utils/parseTreeData";
 import EXAMPLE_JSON from "../assets/example";
 
-export default function HomePage()
+export default function Home()
 {
     const navigate = useNavigate();
     const { dispatch, state } = useTreeContext();
