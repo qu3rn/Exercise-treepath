@@ -59,7 +59,7 @@ export default function TreeNode({
                 </span>
 
                 <Link
-                    to={`/tree/details?path=${encodeURIComponent(currentPath)}`}
+                    to={`/tree/${currentPath}`}
                     className="text-[#A8BFCE] no-underline hover:text-[#F28C28] transition-colors tracking-wide group-hover:text-[#E2EAF8]"
                 >
                     {node.name}

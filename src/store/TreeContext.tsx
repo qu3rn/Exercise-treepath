@@ -16,13 +16,13 @@ import
     SEARCH_RESULTS_STORAGE_KEY
 } from "../utils/storage";
 import type { TreeContextValue } from "../types/treeContext";
-import { treeReducer, initialState } from "../hooks/treeReducer";
+import { useTreeReducer, initialState } from "../hooks/UseTreeReducer";
 
 const TreeContext = createContext<TreeContextValue | null>(null);
 
 export const TreeProvider = ({ children }: PropsWithChildren) =>
 {
-    const [state, dispatch] = useReducer(treeReducer, initialState);
+    const [state, dispatch] = useReducer(useTreeReducer, initialState);
 
     useEffect(() =>
     {

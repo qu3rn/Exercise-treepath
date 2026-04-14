@@ -1,35 +1,23 @@
-import { Link, Navigate, useSearchParams } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { isFileNode, isFolderNode } from '../types/tree';
 import { findNodeByPath } from '../utils/findNodeByPath';
 import { formatSize } from '../utils/formatSize';
 import { getFolderChildrenCount, getFolderTotalSize } from '../utils/treeMetrics';
 import { useTreeContext } from '../store/TreeContext';
 import { buildNodePath } from '../utils/buildNodePath';
+import { useParams } from "react-router-dom";
 
 export default function NodeDetails()
 {
     const { state } = useTreeContext();
-    const [searchParams] = useSearchParams();
+    const { "*": nodePath } = useParams();
 
     if (!state.tree)
     {
         return <Navigate to="/" replace />;
     }
 
-    const path = searchParams.get('path');
-
-    if (!path)
-    {
-        return (
-            <main className="min-h-screen py-8 px-4 bg-[#0D1117]">
-                <div className="w-full max-w-[960px] mx-auto">
-                    <ErrorCard message="Missing node path." />
-                </div>
-            </main>
-        );
-    }
-
-    const decodedPath = decodeURIComponent(path);
+    const decodedPath = nodePath ?? '';
     const node = findNodeByPath(state.tree, decodedPath);
 
     if (!node)
@@ -122,7 +110,7 @@ export default function NodeDetails()
                                     return (
                                         <li key={childPath} className="border-b border-[#1A2438] last:border-b-0">
                                             <Link
-                                                to={`/tree/details?path=${encodeURIComponent(childPath)}`}
+                                                to={`/tree/${childPath}`}
                                                 className="flex items-center gap-3 px-5 py-2.5 no-underline text-[#A8BFCE] font-mono text-sm tracking-wide hover:bg-[#1E2D45] hover:text-[#F28C28] transition-colors"
                                             >
                                                 <span className={`text-[10px] font-bold tracking-widest uppercase border px-1.5 py-0.5 ${child.type === 'folder' ? 'border-[#4755A0] text-[#4755A0]' : 'border-[#2D3E5C] text-[#3D5878]'}`}>
