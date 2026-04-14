@@ -91,8 +91,24 @@ export const parseTreeData = (json: string): TreeNode =>
 
     try
     {
+        if (!json.trim())
+        {
+            throw new Error('JSON input is empty.');
+        }
+
+        if (!isObject(parsed))
+        {
+            throw new Error('Invalid structure: root must be a JSON object, not an array or primitive.');
+        }
+
+        if (parsed.type !== 'folder')
+        {
+            throw new Error('Invalid structure: root node must be a folder, not a file.');
+        }
+
         parsed = JSON.parse(json);
-    } catch
+    }
+    catch
     {
         throw new Error('Invalid JSON format.');
     }
