@@ -34,6 +34,8 @@ export type ClearSearchPayload = undefined;
 export type TreeAction =
     | { type: 'SET_TREE'; payload: SetTreePayload; }
     | { type: 'TOGGLE_EXPANDED'; payload: SetExpandedPayload; }
+    | { type: 'EXPAND_ALL'; }
+    | { type: 'COLLAPSE_ALL'; }
     | { type: 'SET_SEARCH_QUERY'; payload: SetSearchQueryPayload; }
     | { type: 'SET_SEARCH_RESULTS'; payload: SetSearchResultsPayload; }
     | { type: 'CLEAR_SEARCH'; payload?: ClearSearchPayload; }
