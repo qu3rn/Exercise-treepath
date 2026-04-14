@@ -1,6 +1,7 @@
 import { Link, Navigate } from 'react-router-dom';
 import { useTreeContext } from '../store/TreeContext';
 import TreeSection from '../components/tree/TreeSection';
+import TreeToolbar from '../components/tree/TreeToolbar';
 import SearchBar from '../components/search/SearchBar';
 import SearchResults from '../components/search/SearchResults';
 import { useTreeSearch } from '../hooks/useTreeSearch';
@@ -34,12 +35,16 @@ export default function Tree()
                         </p>
                     </div>
 
-                    <Link
-                        to="/"
-                        className="border border-[#2D3E5C] py-2.5 px-4 font-semibold bg-transparent text-[#7A90B0] tracking-wider uppercase text-sm no-underline hover:border-[#F28C28] hover:text-[#F28C28] transition-colors"
-                    >
-                        Back to input
-                    </Link>
+                    <div className="flex items-center gap-2 flex-wrap">
+                        <TreeToolbar />
+
+                        <Link
+                            to="/"
+                            className="border border-[#2D3E5C] py-2.5 px-4 font-semibold bg-transparent text-[#7A90B0] tracking-wider uppercase text-sm no-underline hover:border-[#F28C28] hover:text-[#F28C28] transition-colors"
+                        >
+                            Back to input
+                        </Link>
+                    </div>
                 </section>
 
                 <section className='w-full flex justify-between items-start gap-4 flex-wrap mb-6 pb-4 border-b border-[#1E2D45]'>
