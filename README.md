@@ -91,7 +91,7 @@ Search results are derived from tree + query
   - keyboard navigation (not implemented)
 
 ### What I Would Improve With More Time
-
+- Create bundler configuration and rules
 - Add virtualization for large trees (performance)
 - Implemented full a11y
 - Improved UX by more UI functions ( total storage etc. )
