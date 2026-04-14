@@ -1,15 +1,43 @@
 import { Link, Navigate } from 'react-router-dom';
 import { useTreeContext } from '../store/TreeContext';
-import TreeSection from './tree/TreeSection';
+import TreeSection from '../components/tree/TreeSection';
+import SearchBar from '../components/search/SearchBar';
+import SearchResults from '../components/search/SearchResults';
+import { searchTree } from '../utils/searchTree';
 
 export default function Tree()
 {
-    const { state } = useTreeContext();
+    const { state, dispatch } = useTreeContext();
 
     if (!state.tree)
     {
         return <Navigate to="/" replace />;
     }
+
+    const handleSearchChange = (value: string) =>
+    {
+        dispatch({
+            type: 'SET_SEARCH_QUERY',
+            payload: { query: value },
+        });
+    };
+
+    const handleSearch = () =>
+    {
+        const results = searchTree(state.tree!, state.searchQuery);
+
+        dispatch({
+            type: 'SET_SEARCH_RESULTS',
+            payload: { results },
+        });
+    };
+
+    const handleClearSearch = () =>
+    {
+        dispatch({
+            type: 'CLEAR_SEARCH',
+        });
+    };
 
     return (
         <main className="min-h-screen py-8 px-4 bg-[#0D1117]">
@@ -31,6 +59,20 @@ export default function Tree()
                         Back to input
                     </Link>
                 </section>
+
+                <section className='w-full flex justify-between items-start gap-4 flex-wrap mb-6 pb-4 border-b border-[#1E2D45]'>
+                    <SearchBar
+                        initialValue={state.searchQuery}
+                        onChange={handleSearchChange}
+                        onSearch={handleSearch}
+                        onClear={handleClearSearch}
+                    />
+                </section>
+
+                <SearchResults
+                    query={state.searchQuery}
+                    results={state.searchResults}
+                />
 
                 <div className="bg-[#161D2B] border border-[#1E2D45] border-l-2 border-l-[#4755A0] p-4">
                     <TreeSection root={state.tree} />
