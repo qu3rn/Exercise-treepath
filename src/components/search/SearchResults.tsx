@@ -36,7 +36,7 @@ export default function SearchResults({
                     {results.map((result) => (
                         <li key={result.path} className="border-b border-[#1A2438] last:border-b-0">
                             <Link
-                                to={`/tree/details?path=${encodeURIComponent(result.path)}`}
+                                to={`/tree/${result.path}`}
                                 className="flex items-center gap-3 px-5 py-2.5 no-underline hover:bg-[#1E2D45] transition-colors group"
                             >
                                 <span className={`text-[10px] font-bold tracking-widest uppercase border px-1.5 py-0.5 flex-shrink-0 ${result.node.type === 'folder' ? 'border-[#4755A0] text-[#4755A0]' : 'border-[#2D3E5C] text-[#3D5878]'}`}>

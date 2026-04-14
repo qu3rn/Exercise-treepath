@@ -10,7 +10,7 @@ export default function App()
             <Route path="/" element={<Home />} />
             <Route path="/tree" element={<Tree />} />
             {/* <Route path="/tree/:nodePath" element={<NodeDetailsPage />} /> */}
-            <Route path="/tree/details" element={<NodeDetails />} />
+            <Route path="/tree/*" element={<NodeDetails />} />
         </Routes>
     );
 }
