@@ -3,41 +3,23 @@ import { useTreeContext } from '../store/TreeContext';
 import TreeSection from '../components/tree/TreeSection';
 import SearchBar from '../components/search/SearchBar';
 import SearchResults from '../components/search/SearchResults';
-import { searchTree } from '../utils/searchTree';
+import { useTreeSearch } from '../hooks/useTreeSearch';
 
 export default function Tree()
 {
-    const { state, dispatch } = useTreeContext();
+    const { state } = useTreeContext();
+    const {
+        searchQuery,
+        searchResults,
+        handleSearchChange,
+        handleSearch,
+        handleClearSearch,
+    } = useTreeSearch();
 
     if (!state.tree)
     {
         return <Navigate to="/" replace />;
     }
-
-    const handleSearchChange = (value: string) =>
-    {
-        dispatch({
-            type: 'SET_SEARCH_QUERY',
-            payload: { query: value },
-        });
-    };
-
-    const handleSearch = () =>
-    {
-        const results = searchTree(state.tree!, state.searchQuery);
-
-        dispatch({
-            type: 'SET_SEARCH_RESULTS',
-            payload: { results },
-        });
-    };
-
-    const handleClearSearch = () =>
-    {
-        dispatch({
-            type: 'CLEAR_SEARCH',
-        });
-    };
 
     return (
         <main className="min-h-screen py-8 px-4 bg-[#0D1117]">
@@ -62,7 +44,7 @@ export default function Tree()
 
                 <section className='w-full flex justify-between items-start gap-4 flex-wrap mb-6 pb-4 border-b border-[#1E2D45]'>
                     <SearchBar
-                        initialValue={state.searchQuery}
+                        initialValue={searchQuery}
                         onChange={handleSearchChange}
                         onSearch={handleSearch}
                         onClear={handleClearSearch}
@@ -70,8 +52,8 @@ export default function Tree()
                 </section>
 
                 <SearchResults
-                    query={state.searchQuery}
-                    results={state.searchResults}
+                    query={searchQuery}
+                    results={searchResults}
                 />
 
                 <div className="bg-[#161D2B] border border-[#1E2D45] border-l-2 border-l-[#4755A0] p-4">
