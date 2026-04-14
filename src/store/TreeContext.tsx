@@ -16,7 +16,7 @@ import
     SEARCH_RESULTS_STORAGE_KEY
 } from "../utils/storage";
 import type { TreeContextValue } from "../types/treeContext";
-import { useTreeReducer, initialState } from "../hooks/UseTreeReducer";
+import { useTreeReducer, initialState } from "../hooks/useTreeReducer";
 
 const TreeContext = createContext<TreeContextValue | null>(null);
 
