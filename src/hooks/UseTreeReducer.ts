@@ -8,7 +8,7 @@ export const initialState: TreeState = {
     searchResults: loadSearchResultsFromStorage(),
 };
 
-export const treeReducer = (state: TreeState, action: TreeAction): TreeState =>
+export const useTreeReducer = (state: TreeState, action: TreeAction): TreeState =>
 {
     switch (action.type)
     {
