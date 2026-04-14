@@ -13,7 +13,7 @@ export function useTreeSearch()
     {
         const results = searchTree(state.tree!, debouncedQuery);
         dispatch({ type: 'SET_SEARCH_RESULTS', payload: { results } });
-    }, [debouncedQuery]);
+    }, [debouncedQuery, state.tree]);
 
     const handleSearchChange = (value: string) =>
     {

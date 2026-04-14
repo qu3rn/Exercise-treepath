@@ -3,6 +3,7 @@ import { useTreeContext } from "../../store/TreeContext";
 import { isFolderNode } from "../../types/tree";
 import type { TreeNode as TreeNodeType } from "../../types/tree";
 import { buildNodePath } from "../../utils/buildNodePath";
+import EmptyState from "../common/EmptyState";
 
 type TreeNodeProps = {
     node: TreeNodeType;
@@ -84,9 +85,7 @@ export default function TreeNode({
                             />
                         ))
                     ) : (
-                        <div className="py-1 px-3 text-[#2D3E5C] text-xs tracking-widest uppercase">
-                            Empty folder
-                        </div>
+                        <EmptyState message="Empty folder" />
                     )}
                 </div>
             )}
