@@ -89,15 +89,15 @@ export const loadSearchResultsFromStorage = (): SearchResult[] =>
 
         const searchResults = parsed.filter((searchResult): searchResult is SearchResult =>
         {
-            if (typeof searchResult != 'object' || searchResult !== null)
+            if (typeof searchResult !== 'object' || searchResult === null)
             {
                 return false;
             }
 
             const result = searchResult as Record<string, unknown>;
 
-            const isPath = typeof result === 'string';
-            const isNode = typeof result === 'object' && result.node !== null;
+            const isPath = typeof result['path'] === 'string';
+            const isNode = typeof result['node'] === 'object' && result['node'] !== null;
 
             return isPath && isNode;
         });
