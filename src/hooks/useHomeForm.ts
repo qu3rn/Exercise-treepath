@@ -62,7 +62,8 @@ export function useHomeForm()
             dispatch({ type: 'CLEAR_SEARCH' });
 
             navigate('/tree');
-        } catch (err)
+        }
+        catch (err)
         {
             const message =
                 err instanceof Error ? err.message : 'Something went wrong while parsing JSON.';
